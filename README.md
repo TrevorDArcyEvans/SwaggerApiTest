@@ -1,6 +1,6 @@
-# SwaggerApiTest - uploading a file *and* data!
+# Swagger+Api+Test = upload a file *and* configuration!
 
-**TL;DR** marshal data as json in a header
+**TL;DR** marshal configuration as json in a header
 
 ## Background
 I developed an API to receive a data file *and* some configuration.
@@ -19,7 +19,7 @@ is not really possible.
 ### Swagger
 We are using [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) to
 provide a UI to test our API.  Unfortunately, *ImportFullSpecification* is a nested object
-and creating these *and* selecting *IFormFile* is not really supported with *Swashbuckle*
+and creating these *and* selecting an *IFormFile* is not really supported with *Swashbuckle*
 (or *NSwag*).  It was a case of one or the other but never both.
 
 ## Solution
