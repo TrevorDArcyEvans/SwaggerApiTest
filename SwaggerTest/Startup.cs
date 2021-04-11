@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using SwaggerTest.Controllers;
 
 namespace SwaggerTest
 {
@@ -23,6 +24,7 @@ namespace SwaggerTest
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwaggerTest", Version = "v1" });
+        c.DocumentFilter<ApiModelDocumentFilter<ImportFullSpecification>>();
       });
       services.AddSwaggerGenNewtonsoftSupport();
     }
