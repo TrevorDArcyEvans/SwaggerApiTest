@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -11,13 +12,13 @@ namespace ApiTest
 {
   public class Program
   {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-      Import_RestSharp();
-      Import_HttpClient();
+      await Import_RestSharp();
+      await Import_HttpClient();
     }
 
-    private static void Import_HttpClient()
+    private static async Task Import_HttpClient()
     {
       var currExe = Assembly.GetExecutingAssembly().Location;
       var data = new ImportFullSpecification
@@ -59,12 +60,12 @@ namespace ApiTest
 
       var client = new HttpClient();
       var res = client.PostAsync("http://localhost:5000/Importer/ImportFull", form).Result;
-      var apiRes = res.Content.ReadAsStringAsync().Result;
+      var apiRes = await res.Content.ReadAsStringAsync();
 
       Console.WriteLine($"{nameof(Import_HttpClient)} --> {apiRes}");
     }
 
-    private static void Import_RestSharp()
+    private static async Task Import_RestSharp()
     {
       var client = new RestClient("http://localhost:5000/");
       var req = new RestRequest("/Importer/ImportFull", Method.POST);
@@ -95,7 +96,7 @@ namespace ApiTest
       req.AddHeader("importSpec", json);
       req.AddFile("file", currExe);
 
-      var res = client.Execute<string>(req);
+      var res = await client.ExecuteAsync<string>(req);
       var apiRes = res.Data;
 
       Console.WriteLine($"{nameof(Import_RestSharp)} --> {apiRes}");
